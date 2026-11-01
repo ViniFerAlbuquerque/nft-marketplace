@@ -1,11 +1,45 @@
-﻿
-import { Link, useParams } from "@tanstack/react-router";
+﻿import { Link, useParams } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2 } from "lucide-react";
-import { getOrder } from "../features/checkout/orderService";
+import { fetchOrder } from "../services/orders";
+
 
 export default function OrderConfirmation() {
   const { orderId } = useParams({ from: "/orders/$orderId" });
-  const order = getOrder(orderId);
+  // const order = getOrder(orderId);
+  
+const {
+  data: order,
+  isPending,
+  isError,
+} = useQuery({
+  queryKey: ["order", orderId],
+  queryFn: () => fetchOrder(orderId),
+});
+
+
+if (isPending) {
+  return (
+    <main className="min-h-screen bg-[#120b08] p-10 text-center text-white">
+      Carregando pedido...
+    </main>
+  );
+}
+
+if (isError) {
+  return (
+    <main className="min-h-screen bg-[#120b08] p-10 text-center text-white">
+      <h1 className="mb-4 text-2xl font-bold">
+        Não foi possível consultar o pedido.
+      </h1>
+      <p className="text-[#b99b79]">
+        Verifique se a API simulada está ativa.
+      </p>
+    </main>
+  );
+}
+
+
 
   if (!order) {
     return (

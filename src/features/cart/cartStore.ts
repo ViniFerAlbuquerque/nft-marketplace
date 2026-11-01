@@ -7,16 +7,29 @@ export type CartItem = {
   quantity: number;
 };
 
-let items: CartItem[] = [];
+const STORAGE_KEY = "kurio_cart_v1";
+
+function readCart(): CartItem[] {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? (JSON.parse(saved) as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+let items: CartItem[] = readCart();
 
 const listeners = new Set<() => void>();
 
 function emitChange() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   listeners.forEach((listener) => listener());
 }
 
 function subscribe(listener: () => void) {
   listeners.add(listener);
+
   return () => {
     listeners.delete(listener);
   };
@@ -57,3 +70,4 @@ export function clearCart() {
   items = [];
   emitChange();
 }
+

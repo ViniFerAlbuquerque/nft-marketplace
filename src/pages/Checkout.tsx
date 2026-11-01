@@ -4,13 +4,15 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import Decimal from "decimal.js";
 import { ArrowLeft, Wallet } from "lucide-react";
 import { useCart, clearCart } from "../features/cart/cartStore";
-import { createOrder } from "../features/checkout/orderService";
+import { useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { submitOrder } from "../services/orders";
 
 export default function Checkout() {
   const items = useCart();
   const navigate = useNavigate();
   const [wallet, setWallet] = useState("metamask");
-  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
 
   const subtotal = items.reduce(
@@ -19,30 +21,58 @@ export default function Checkout() {
     new Decimal(0)
   );
 
+  const idempotencyKey = useRef<string | null>(null);
+
+const orderMutation = useMutation({
+  mutationFn: submitOrder,
+});
+
   const fee = new Decimal("0.005");
   const total = subtotal.plus(fee);
 
-  async function handleCheckout() {
-    if (processing || items.length === 0) return;
+  
+async function handleCheckout() {
+  if (orderMutation.isPending || items.length === 0) {
+    return;
+  }
 
-    setProcessing(true);
-    setError("");
+  setError("");
 
-    try {
-      const order = createOrder(items, wallet);
+  if (!idempotencyKey.current) {
+    idempotencyKey.current = crypto.randomUUID();
+  }
 
-      await navigate({
-        to: "/orders/$orderId",
-        params: { orderId: order.id },
-      });
+  try {
+    const order = await orderMutation.mutateAsync({
+      items: items.map(({ nft, quantity }) => ({
+        nftId: nft.id,
+        quantity,
+      })),
+      wallet,
+      idempotencyKey: idempotencyKey.current,
+    });
 
-      clearCart();
-    } catch {
+    await navigate({
+      to: "/orders/$orderId",
+      params: { orderId: order.id },
+    });
+
+    clearCart();
+  } catch (cause) {
+    if (axios.isAxiosError(cause)) {
+      const message = cause.response?.data?.message;
+
+      setError(
+        typeof message === "string"
+          ? message
+          : "Falha na comunicação com a API simulada."
+      );
+    } else {
       setError("Não foi possível concluir o pedido.");
-    } finally {
-      setProcessing(false);
     }
   }
+}
+
 
   if (items.length === 0) {
     return (
@@ -158,10 +188,10 @@ export default function Checkout() {
             <button
               type="button"
               onClick={handleCheckout}
-              disabled={processing}
+              disabled={orderMutation.isPending}
               className="mt-7 w-full rounded-lg bg-[#d9904b] px-6 py-4 font-bold text-[#120b08] disabled:opacity-50"
             >
-              {processing ? "Processando..." : "Confirmar compra"}
+              {orderMutation.isPending ? "Processando..." : "Confirmar compra"}
             </button>
           </aside>
         </div>
