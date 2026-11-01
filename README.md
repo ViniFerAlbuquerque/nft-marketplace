@@ -1,75 +1,112 @@
-# React + TypeScript + Vite
+# KURIO — NFT Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketplace demonstrativo de NFTs, desenvolvido com React, TypeScript e Vite, com interface responsiva, carrinho de compras, checkout simulado e testes automatizados.
 
-Currently, two official plugins are available:
+## Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + TypeScript + Vite
+- Tailwind CSS e shadcn/ui
+- TanStack Router e TanStack Query
+- Axios e Mock Service Worker (MSW)
+- decimal.js
+- Vitest e Playwright
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Catálogo de NFTs com busca, filtros e ordenação
+- Visualização de detalhes dos NFTs
+- Seleção de quantidade e carrinho persistente
+- Checkout demonstrativo com MetaMask e WalletConnect simulados
+- API simulada para criação e consulta de pedidos
+- Proteção contra duplicação de pedidos por chave de idempotência
+- Página de confirmação de compra
+- Cadastro, login e perfil demonstrativos
+- Cadastro local de endereços de carteiras Ethereum
+- Interface responsiva para desktop e dispositivos móveis
 
-## Expanding the ESLint configuration
+## Como executar
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Pré-requisitos:** Node.js e npm compatíveis com a versão do Vite utilizada.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Crie `.env.development` na raiz:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```env
+VITE_ENABLE_MOCKS=true
 ```
+
+Inicie o servidor:
+
+```bash
+npm run dev
+```
+
+Acesse o endereço informado pelo Vite.
+
+## Testes
+
+Testes unitários:
+
+```bash
+npx vitest run
+```
+
+Testes de ponta a ponta:
+
+```bash
+npx playwright install chromium
+npx playwright test
+```
+
+Build de produção:
+
+```bash
+npm run build
+```
+
+Pré-visualização da versão compilada:
+
+```bash
+npm run preview
+```
+
+## Estrutura do projeto
+
+- `src/app` — roteamento e configuração do TanStack Query
+- `src/components` — componentes reutilizáveis
+- `src/features` — funcionalidades de autenticação e carrinho
+- `src/pages` — páginas da aplicação
+- `src/services` — comunicação com a API
+- `src/mocks` — dados e handlers do MSW
+- `tests` — testes end-to-end com Playwright
+
+## Limitações
+
+Este projeto é uma demonstração técnica.
+
+- Não realiza transações reais em blockchain.
+- Não conecta carteiras reais nem processa pagamentos.
+- A autenticação é simulada e não verifica a identidade do usuário.
+- Senhas não são armazenadas nem verificadas.
+- Os dados demonstrativos são mantidos localmente no navegador.
+- A API é simulada pelo MSW e não substitui um backend de produção.
+
+Não utilize senhas reais, chaves privadas ou informações sensíveis.
+
+## Deploy
+
+O frontend pode ser publicado na Vercel com as seguintes configurações:
+
+- Framework: Vite
+- Build: `npm run build`
+- Output: `dist`
+- Variável de ambiente: `VITE_ENABLE_MOCKS=true`
+
+O arquivo `vercel.json` configura o fallback das rotas da aplicação.
+
+## Objetivo
+
+Demonstrar competências em desenvolvimento frontend, arquitetura de componentes, gerenciamento de estado, integração com APIs, responsividade, testes automatizados e publicação de aplicações web.
