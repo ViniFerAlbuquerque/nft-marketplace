@@ -1,6 +1,6 @@
-
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import Footer from "../components/layout/Footer";
 import Decimal from "decimal.js";
 import {
   ArrowRight,
@@ -59,8 +59,7 @@ export default function Home() {
   const [mobileFiltersOpen, setMobileFiltersOpen] =
     useState(false);
 
-  const [newsletterEmail, setNewsletterEmail] = useState("");
-
+ 
   const collections = useMemo(
     () => [
       "Todas",
@@ -304,11 +303,10 @@ export default function Home() {
                   type="button"
                   onClick={() => setActiveTab(value)}
                   aria-pressed={activeTab === value}
-                  className={`shrink-0 border-b-2 pb-2 text-sm transition ${
-                    activeTab === value
-                      ? "border-[#d9904b] font-bold text-[#d9904b]"
-                      : "border-transparent text-[#f4e9d9] hover:text-[#d9904b]"
-                  }`}
+                  className={`shrink-0 border-b-2 pb-2 text-sm transition ${activeTab === value
+                    ? "border-[#d9904b] font-bold text-[#d9904b]"
+                    : "border-transparent text-[#f4e9d9] hover:text-[#d9904b]"
+                    }`}
                 >
                   {label}
                 </button>
@@ -365,9 +363,8 @@ export default function Home() {
 
             {/* SIDEBAR */}
             <aside
-              className={`${
-                mobileFiltersOpen ? "block" : "hidden"
-              } self-start lg:block`}
+              className={`${mobileFiltersOpen ? "block" : "hidden"
+                } self-start lg:block`}
             >
               <div className="rounded-lg bg-[#261813] p-5">
                 <div className="mb-5 flex items-center justify-between">
@@ -651,82 +648,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* NEWSLETTER */}
-        <section
-          id="newsletter"
-          className="mt-20 grid gap-8 rounded-lg bg-[#261813] p-7 lg:grid-cols-[1fr_1fr]"
-        >
-          <div className="grid gap-5 sm:grid-cols-3">
-            {[
-              {
-                icon: "W",
-                title: "Segurança da carteira",
-                description:
-                  "Proteja seus ativos digitais.",
-              },
-              {
-                icon: "C",
-                title: "Criadores em destaque",
-                description:
-                  "Conheça artistas e comunidades.",
-              },
-              {
-                icon: "D",
-                title: "Alertas de lançamentos",
-                description:
-                  "Descubra novidades do mercado.",
-              },
-            ].map((item) => (
-              <div key={item.title}>
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#d9904b] font-bold text-[#120b08]">
-                  {item.icon}
-                </div>
-
-                <h3 className="text-xs font-bold">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-xs leading-5 text-[#b99b79]">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h2 className="mb-3 text-lg font-bold">
-              Antecipe-se ao próximo lançamento
-            </h2>
-
-            <p className="mb-5 text-xs leading-6 text-[#b99b79]">
-              Receba informações sobre novas coleções,
-              artistas e novidades do mercado.
-            </p>
-
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <input
-                type="email"
-                aria-label="E-mail para novidades"
-                placeholder="Digite seu e-mail..."
-                value={newsletterEmail}
-                onChange={(event) =>
-                  setNewsletterEmail(event.target.value)
-                }
-                className="h-11 min-w-0 flex-1 rounded-md border border-[#493022] bg-[#120b08] px-4 text-xs text-[#f4e9d9]"
-              />
-
-              <button
-                type="button"
-                disabled
-                title="Inscrição ainda não disponível"
-                className="h-11 cursor-not-allowed rounded-md bg-[#d9904b]/60 px-5 text-xs font-bold text-[#120b08]"
-              >
-                Em breve
-              </button>
-            </div>
-          </div>
-        </section>
+        
       </div>
+      <Footer />
     </main>
   );
 }
