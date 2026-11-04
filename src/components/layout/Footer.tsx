@@ -56,7 +56,7 @@ export default function Footer() {
               return (
                 <div
                   key={benefit.title}
-                  className="border-b border-[#493022] px-5 py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
+                 className="border-b border-[#493022] px-5 py-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
                 >
                   <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d9904b] text-[#120b08]">
                     <Icon size={21} strokeWidth={2} />
@@ -74,7 +74,7 @@ export default function Footer() {
             })}
           </div>
 
-          <div className="border-t border-[#493022] px-5 py-6 md:border-t-0 md:border-l xl:px-7">
+          <div className="border-t border-[#493022] px-5 py-4 md:border-t-0 md:border-l xl:px-7">
             <h2 className="text-sm font-bold leading-5">
               Antecipe-se ao próximo lançamento
             </h2>
@@ -120,7 +120,7 @@ export default function Footer() {
         </section>
 
         {/* FAIXA 2: IDENTIDADE E CONTATO */}
-        <section className="grid gap-6 border-x border-[#493022] bg-[#3b2517] px-5 py-7 sm:px-7 lg:grid-cols-[1fr_1.25fr_1fr] lg:items-center lg:gap-8">
+        <section className="grid gap-4 border-x border-[#493022] bg-[#3b2517] px-5 py-5 sm:px-7 lg:grid-cols-[0.8fr_1.4fr_1fr] lg:items-center lg:gap-5">
           <Link
             to="/"
             className="inline-flex w-fit items-center text-2xl font-black tracking-[0.14em]"
@@ -140,9 +140,9 @@ export default function Footer() {
         </section>
 
         {/* FAIXA 3: LINKS */}
-        <section className="grid gap-8 border-x border-b border-[#493022] bg-[#21150f] px-5 py-8 sm:grid-cols-2 sm:px-7 lg:grid-cols-4 lg:gap-10 lg:py-10">
+        <section className="grid gap-7 border-x border-b border-[#493022] bg-[#21150f] px-5 py-7 sm:grid-cols-2 sm:px-7 lg:grid-cols-4 lg:gap-8 lg:py-8">
           <nav aria-label="Meu perfil">
-            <h2 className="mb-4 text-sm font-bold">
+            <h2 className="mb-4 text-sm font-bold"> 
               Meu perfil
             </h2>
 

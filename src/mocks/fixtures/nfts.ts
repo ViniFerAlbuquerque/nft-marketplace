@@ -1,3 +1,18 @@
+export type NFTCategory =
+  | "Arte digital"
+  | "Fotografia"
+  | "Música"
+  | "Arte 3D"
+  | "Colecionáveis"
+  | "Generativa"
+  | "Jogos"
+  | "Assinaturas"
+  | "Utilidade";
+
+export type NFTNetwork =
+  | "Ethereum"
+  | "Polygon"
+  | "Solana";
 
 export type NFT = {
   id: string;
@@ -6,7 +21,10 @@ export type NFT = {
   price: string;
   image: string;
   creator: string;
+  category?: NFTCategory;
+  network?: NFTNetwork;
 };
+
 
 export const nfts: NFT[] = [
   {

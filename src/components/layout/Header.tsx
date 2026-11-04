@@ -29,6 +29,7 @@ export default function Header() {
         </Link>
 
         {/* Navegação desktop */}
+
         <nav
           aria-label="Navegação principal"
           className="hidden items-center gap-7 lg:flex xl:gap-10"
@@ -36,35 +37,34 @@ export default function Header() {
           <Link
             to="/"
             onClick={closeMenu}
-            className="text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
-            activeProps={{
-              className: "text-[#d9904b]",
-            }}
+            activeOptions={{ exact: true }}
+            className="relative inline-flex items-center py-3 text-sm font-medium text-[#d9904b] transition-colors hover:text-[#edaa67] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[#d9904b]"
           >
             Início
           </Link>
 
           <a
             href="/#marketplace"
-            className="text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
+            className="py-3 text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
           >
             Mercado
           </a>
 
           <a
             href="/#featured"
-            className="text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
+            className="py-3 text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
           >
-            Destaques
+            Criadores
           </a>
 
           <a
-            href="/#newsletter"
-            className="text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
+            href="/#blog"
+            className="py-3 text-sm font-medium text-[#f4e9d9] transition-colors hover:text-[#d9904b]"
           >
-            Comunidade
+            Aprenda
           </a>
         </nav>
+
 
         {/* Ações */}
         <div className="flex items-center gap-3 sm:gap-5">
@@ -91,12 +91,11 @@ export default function Header() {
           >
             <UserRound size={21} />
           </Link>
-
           <Link
             to="/login"
-            className="hidden rounded-md border border-[#d9904b] px-5 py-2.5 text-sm font-bold text-[#d9904b] transition-colors hover:bg-[#d9904b] hover:text-[#120b08] sm:inline-flex"
+            className="inline-flex min-h-11 items-center justify-center rounded-md border border-[#d9904b] bg-[#d9904b] px-6 py-2 font-mono text-sm font-extrabold uppercase tracking-wide text-[#120b08] transition-colors hover:bg-[#edaa67]"
           >
-            Entrar
+            ENTRAR
           </Link>
 
           {/* Menu mobile */}
