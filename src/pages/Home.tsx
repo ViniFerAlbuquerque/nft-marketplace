@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import Footer from "../components/layout/Footer";
 import Decimal from "decimal.js";
 import {
-  ArrowRight,
   ArrowUpRight,
   Search,
   SlidersHorizontal,
@@ -79,19 +78,6 @@ export default function Home() {
   const [appliedPrice, setAppliedPrice] = useState<[number, number]>([0, 2.3]);
   const [page, setPage] = useState(1);
   const pageSize = 9;
-  const collectionCounts = useMemo(() =>
-    new Map([...new Set(nfts.map((nft) => nft.collection))].map((name) => [name, nfts.filter((nft) => nft.collection === name).length])),
-    []
-  );
-
-
-  const collections = useMemo(
-    () => [
-      "Todas",
-      ...new Set(nfts.map((nft) => nft.collection)),
-    ],
-    [],
-  );
 
   const featuredNFT = nfts[0];
   const secondaryNFT = nfts[1] ?? nfts[0];
@@ -130,12 +116,12 @@ export default function Home() {
     updateFilters(value, collection, sort);
   }
 
-  function handleCollection(value: string) {
-    setCollection(value);
-    setPage(1);
-    updateFilters(search, value, sort);
-    setMobileFiltersOpen(false);
-  }
+  // function handleCollection(value: string) {
+  //   setCollection(value);
+  //   setPage(1);
+  //   updateFilters(search, value, sort);
+  //   setMobileFiltersOpen(false);
+  // }
 
   function handleSort(value: SortOption) {
     setSort(value);
@@ -350,31 +336,12 @@ export default function Home() {
                     <X size={18} />
                   </button>
                 </div>
-                {/* 
-                <div className="space-y-3">
-                  {collections.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => handleCollection(item)}
-                      aria-pressed={collection === item}
-                      className={`flex w-full items-center justify-between gap-3 text-left text-xs transition-colors ${collection === item
-                          ? "font-semibold text-[#d9904b]"
-                          : "text-[#b99b79] hover:text-[#d9904b]"
-                        }`}
-                    >
-                      <span className="truncate">{item === "Todas" ? "Todas as coleções" : item}</span>
-                      <span className="shrink-0">({item === "Todas" ? nfts.length : collectionCounts.get(item) ?? 0})</span>
-                    </button>
-                  ))}
-                </div> */}
-
 
                 <div className="space-y-3">
                   {figmaCategories.map(({ name, count }) => (
                     <div
                       key={name}
-                      className="flex items-center justify-between gap-3 text-xs text-[#c9ad90]"
+                      className="flex items-center justify-between gap-3 text-[12px] leading-5 text-[#c9ad90]"
                     >
                       <span>{name}</span>
                       <span className="tabular-nums">({count})</span>
@@ -449,9 +416,13 @@ export default function Home() {
 
               {/* NFT em destaque — segue a coluna lateral do Figma */}
               <div id="featured" className="mt-5 overflow-hidden bg-[#21150f] pb-4">
-                <div className="px-3 pt-5 text-center">
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-[#d9904b]">NFT EM DESTAQUE</h3>
-                  <p className="mt-2 text-xs font-bold uppercase text-[#f4e9d9]">OFERTA LIMITADA</p>
+                <div className="px-4 py-4 text-left font-mono">
+                  <h3 className="text-[19px] font-bold uppercase tracking-wide text-[#d9904b]">
+                    NFT EM DESTAQUE
+                  </h3>
+                  <p className="mt-1 text-[16px] text-center font-bold uppercase tracking-wide text-[#f4e9d9]">
+                    OFERTA LIMITADA
+                  </p>
                 </div>
                 <Link to="/nft/$nftId" params={{ nftId: secondaryNFT.id }} className="mt-4 block overflow-hidden rounded-lg">
                   <img
@@ -562,124 +533,131 @@ export default function Home() {
         </section>
 
         {/* BANNERS PROMOCIONAIS */}
-        <section className="mt-20 grid gap-5 md:grid-cols-2">
-          <div className="grid overflow-hidden rounded-lg bg-[#261813] sm:grid-cols-2">
-            <img
-              src={featuredNFT.image}
-              alt={featuredNFT.name}
-              loading="lazy"
-              className="aspect-square h-full w-full object-cover"
-            />
 
-            <div className="flex flex-col items-center justify-center p-6 text-center">
-              <h2 className="text-base font-bold">
-                Lançamentos incríveis
-                de edição limitada
-              </h2>
+        {/* BANNERS PROMOCIONAIS */}
+        <section
+          id="promos"
+          aria-label="Destaques do marketplace"
+          className="mt-16 grid gap-5 md:grid-cols-2"
+        >
+          {[
+            {
+              nft: featuredNFT,
+              title: "Lançamentos gênesis de edição limitada",
+              description:
+                "Colecione edições escassas diretamente dos criadores antes da revelação pública.",
+            },
+            {
+              nft: nfts[5] ?? secondaryNFT,
+              title: "Arte digital selecionada e muito mais",
+              description:
+                "Explore novos artistas, coleções verificadas e obras digitais que definem a cultura.",
+            },
+          ].map((promo) => (
+            <article
+              key={promo.title}
+              className="grid h-[250px] min-w-0 grid-cols-[48%_52%] overflow-hidden rounded-md bg-[#261813]"
+            >
+              <div className="h-full min-w-0 overflow-hidden">
+                <img
+                  src={promo.nft.image}
+                  alt={promo.nft.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
 
-              <p className="mt-3 text-xs leading-6 text-[#b99b79]">
-                Descubra coleções digitais e encontre
-                sua próxima obra.
-              </p>
+              <div className="flex min-w-0 flex-col items-end justify-center px-5 py-4 text-right">
+                <h2 className="max-w-[240px] font-mono text-[13px] font-bold leading-[1.45] tracking-wide text-[#f4e9d9]">
+                  {promo.title}
+                </h2>
 
-              <a
-                href="#marketplace"
-                className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#d9904b] px-4 py-2 text-xs font-bold text-[#120b08]"
-              >
-                Explorar
-                <ArrowRight size={15} />
-              </a>
-            </div>
-          </div>
+                <p className="mt-3 max-w-[245px] font-mono text-[10px] leading-[1.6] text-[#b99b79]">
+                  {promo.description}
+                </p>
 
-          <div className="grid overflow-hidden rounded-lg bg-[#261813] sm:grid-cols-2">
-            <img
-              src={secondaryNFT.image}
-              alt={secondaryNFT.name}
-              loading="lazy"
-              className="aspect-square h-full w-full object-cover"
-            />
-
-            <div className="flex flex-col items-center justify-center p-6 text-center">
-              <h2 className="text-base font-bold">
-                Arte digital selecionada
-                e muito mais
-              </h2>
-
-              <p className="mt-3 text-xs leading-6 text-[#b99b79]">
-                Explore NFTs de diferentes artistas
-                e coleções.
-              </p>
-
-              <a
-                href="#marketplace"
-                className="mt-7 inline-flex min-h-12 items-center justify-center rounded-md bg-[#d9904b] px-7 py-3 font-mono text-sm font-extrabold uppercase tracking-wide text-[#120b08] transition-colors hover:bg-[#edaa67]"
-              >
-                EXPLORAR
-              </a>
-            </div>
-          </div>
+                <a
+                  href="#marketplace"
+                  className="mt-3 inline-flex min-h-9 items-center justify-center gap-1 rounded-md bg-[#d9904b] px-5 py-2 font-mono text-[11px] font-bold text-[#120b08] transition-colors hover:bg-[#edaa67]"
+                >
+                  Explorar
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
         </section>
 
+
         {/* DIÁRIO DA CUNHAGEM */}
-        <section className="mt-20">
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl font-extrabold sm:text-3xl">
+        <section id="blog" className="mt-16 scroll-mt-24">
+          <div className="mb-7 text-center">
+            <h2 className="text-2xl font-extrabold tracking-wide text-[#f4e9d9] sm:text-3xl">
               Diário da Cunhagem
             </h2>
 
-            <p className="mx-auto mt-3 max-w-xl text-xs leading-6 text-[#b99b79]">
-              Histórias, guias e insights para colecionadores
-              sobre o universo da propriedade digital.
+            <p className="mx-auto mt-3 max-w-2xl text-xs leading-6 text-[#b99b79]">
+              Histórias, guias e insights para colecionadores sobre o universo da
+              propriedade digital.
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 title: "Como funciona a propriedade de NFTs",
                 description:
-                  "Aprenda a colecionar e verificar ativos digitais.",
-                nft: nfts[2] ?? featuredNFT,
+                  "Aprenda a colecionar, negociar e verificar ativos digitais.",
+                nft: nfts[5] ?? featuredNFT,
+                date: "12 de setembro",
+                readingTime: "Leitura de 6 min",
               },
               {
                 title: "10 artistas digitais para acompanhar",
                 description:
                   "Conheça criadores que moldam a cultura digital.",
                 nft: featuredNFT,
+                date: "13 de setembro",
+                readingTime: "Leitura de 2 min",
               },
               {
                 title: "Raridade, atributos e procedência",
                 description:
-                  "Entenda raridade, procedência e utilidade.",
+                  "Entenda raridade, procedência, direitos autorais e utilidade.",
                 nft: secondaryNFT,
+                date: "15 de setembro",
+                readingTime: "Leitura de 3 min",
               },
               {
                 title: "Como proteger sua carteira",
                 description:
-                  "Proteja seus ativos e sua identidade.",
-                nft: nfts[3] ?? featuredNFT,
+                  "Proteja seus ativos, suas chaves e sua identidade.",
+                nft: nfts[6] ?? featuredNFT,
+                date: "15 de setembro",
+                readingTime: "Leitura de 2 min",
               },
             ].map((article) => (
               <article
                 key={article.title}
-                className="overflow-hidden rounded-lg bg-[#261813]"
+                className="flex min-w-0 flex-col overflow-hidden rounded-md bg-[#261813]"
               >
-                {/* <img
-                  src={article.nft.image}
-                  alt={article.nft.name}
-                  loading="lazy"
-                  className="aspect-[4/3] w-full object-cover"
-                /> */}
+                <div className="overflow-hidden">
+                  <img
+                    src={article.nft.image}
+                    alt={article.nft.name}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                </div>
 
-                <img
-                  src={featuredNFT.image}
-                  alt={featuredNFT.name}
-                  className="h-[320px] w-full rounded-[24px] object-cover sm:h-[400px] lg:h-[470px] lg:rounded-[24px]"
-                />
+                <div className="flex flex-1 flex-col p-4">
+                  <p className="text-[10px] leading-4 text-[#b99b79]">
+                    {article.date}
+                    <span className="mx-2 text-[#d9904b]">|</span>
+                    {article.readingTime}
+                  </p>
 
-                <div className="p-4">
-                  <h3 className="text-sm font-bold">
+                  <h3 className="mt-2 text-sm font-bold leading-5 text-[#f4e9d9]">
                     {article.title}
                   </h3>
 
@@ -687,8 +665,8 @@ export default function Home() {
                     {article.description}
                   </p>
 
-                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#d9904b]">
-                    Em breve
+                  <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-bold text-[#d9904b]">
+                    Ler mais
                     <ArrowUpRight size={14} />
                   </span>
                 </div>
@@ -696,7 +674,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
 
       </div>
       <Footer />
