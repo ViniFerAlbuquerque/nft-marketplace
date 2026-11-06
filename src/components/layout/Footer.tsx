@@ -2,6 +2,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import {
+  Phone,
   Bell,
   Camera,
   Mail,
@@ -47,7 +48,7 @@ export default function Footer() {
         <section
           id="newsletter"
           aria-label="Novidades da KURIO"
-          className="grid gap-0 border border-[#493022] bg-[#24160f] md:grid-cols-2 xl:grid-cols-[1.6fr_1fr]"
+          className="grid gap-0 border border-[#493022] bg-[#24160f] lg:grid-cols-[3fr_1.25fr]"
         >
           <div className="grid grid-cols-1 sm:grid-cols-3">
             {benefits.map((benefit) => {
@@ -56,9 +57,9 @@ export default function Footer() {
               return (
                 <div
                   key={benefit.title}
-                 className="border-b border-[#493022] px-5 py-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
+                  className="border-b border-[#493022] px-4 py-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
                 >
-                  <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d9904b] text-[#120b08]">
+                  <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#d9904b] text-[#120b08]">
                     <Icon size={21} strokeWidth={2} />
                   </span>
 
@@ -74,7 +75,7 @@ export default function Footer() {
             })}
           </div>
 
-          <div className="border-t border-[#493022] px-5 py-4 md:border-t-0 md:border-l xl:px-7">
+          <div className="border-t border-[#493022] px-5 py-4 lg:border-l lg:border-t-0">
             <h2 className="text-sm font-bold leading-5">
               Antecipe-se ao próximo lançamento
             </h2>
@@ -86,7 +87,7 @@ export default function Footer() {
 
             <form
               onSubmit={handleNewsletter}
-              className="mt-5 flex flex-col gap-2 sm:flex-row"
+              className="mt-3 flex flex-col gap-2 sm:flex-row"
             >
               <label htmlFor="footer-email" className="sr-only">
                 E-mail para newsletter
@@ -119,8 +120,11 @@ export default function Footer() {
           </div>
         </section>
 
+
+
         {/* FAIXA 2: IDENTIDADE E CONTATO */}
-        <section className="grid gap-4 border-x border-[#493022] bg-[#3b2517] px-5 py-5 sm:px-7 lg:grid-cols-[0.8fr_1.4fr_1fr] lg:items-center lg:gap-5">
+        <section className="grid gap-5 border-x border-[#493022] bg-[#3b2517] px-5 py-5 sm:grid-cols-2 sm:px-7 lg:grid-cols-[0.8fr_1.5fr_1.2fr_1fr] lg:items-center lg:gap-6">
+          {/* COLUNA 1: MARCA */}
           <Link
             to="/"
             className="inline-flex w-fit items-center text-2xl font-black tracking-[0.14em]"
@@ -128,21 +132,31 @@ export default function Footer() {
             KURIO<span className="text-[#d9904b]">.</span>
           </Link>
 
-          <p className="max-w-md text-xs leading-6 text-[#dfc5a7]">
+          {/* COLUNA 2: DESCRIÇÃO */}
+          <p className="text-xs leading-5 text-[#dfc5a7]">
             Feito para colecionadores, criadores e curiosos
             pelo universo da arte digital.
           </p>
 
-          <div className="flex items-start gap-2 text-xs leading-6 text-[#dfc5a7] lg:justify-end">
-            <Mail size={17} className="mt-1 shrink-0 text-[#d9904b]" />
+          {/* COLUNA 3: E-MAIL */}
+          <div className="flex items-center gap-2 text-xs leading-5 text-[#dfc5a7]">
+            <Mail size={17} className="shrink-0 text-[#d9904b]" />
             <span>Contato pelos canais oficiais da KURIO</span>
+          </div>
+
+          {/* COLUNA 4: TELEFONE */}
+          <div className="flex items-center gap-2 text-xs leading-5 text-[#dfc5a7]">
+            <Phone size={17} className="shrink-0 text-[#d9904b]" />
+            <span>+55 11 4002 8922</span>
           </div>
         </section>
 
+
+
         {/* FAIXA 3: LINKS */}
-        <section className="grid gap-7 border-x border-b border-[#493022] bg-[#21150f] px-5 py-7 sm:grid-cols-2 sm:px-7 lg:grid-cols-4 lg:gap-8 lg:py-8">
+        <section className="grid gap-6 border-x border-b border-[#493022] bg-[#21150f] px-5 py-6 sm:grid-cols-2 sm:px-7 lg:grid-cols-4 lg:gap-8">
           <nav aria-label="Meu perfil">
-            <h2 className="mb-4 text-sm font-bold"> 
+            <h2 className="mb-3 text-sm font-bold">
               Meu perfil
             </h2>
 
@@ -166,7 +180,7 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h2 className="mb-4 text-sm font-bold">
+            <h2 className="mb-3 text-sm font-bold">
               Central de ajuda
             </h2>
 
@@ -179,7 +193,7 @@ export default function Footer() {
           </div>
 
           <nav aria-label="Coleções">
-            <h2 className="mb-4 text-sm font-bold">
+            <h2 className="mb-3 text-sm font-bold">
               Coleções
             </h2>
 
@@ -219,7 +233,7 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h2 className="mb-4 text-sm font-bold">
+            <h2 className="mb-3 text-sm font-bold">
               Redes sociais
             </h2>
 
