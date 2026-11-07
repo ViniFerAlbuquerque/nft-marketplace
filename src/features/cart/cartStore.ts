@@ -51,7 +51,7 @@ export function addToCart(nft: NFT, quantity = 1) {
   if (existing) {
     items = items.map((item) =>
       item.nft.id === nft.id
-        ? { ...item, quantity: item.quantity + quantity }
+        ? { ...item, quantity: Math.min(99, item.quantity + quantity) }
         : item
     );
   } else {
@@ -65,6 +65,36 @@ export function removeFromCart(id: string) {
   items = items.filter((item) => item.nft.id !== id);
   emitChange();
 }
+
+
+export function updateCartQuantity(id: string, quantity: number) {
+  // Aceita somente quantidades inteiras entre 1 e 99.
+  if (
+    !Number.isSafeInteger(quantity) ||
+    quantity < 1 ||
+    quantity > 99
+  ) {
+    return;
+  }
+
+  const existing = items.find((item) => item.nft.id === id);
+
+  // Não altera produtos inexistentes.
+  if (!existing || existing.quantity === quantity) {
+    return;
+  }
+
+  // Cria um novo array para notificar o React.
+  items = items.map((item) =>
+    item.nft.id === id
+      ? { ...item, quantity }
+      : item
+  );
+
+  // Atualiza localStorage e componentes inscritos.
+  emitChange();
+}
+
 
 export function clearCart() {
   items = [];
