@@ -178,8 +178,8 @@ export default function OrderConfirmation() {
               <span className="text-[#b99b79]">
                 Taxa de rede
               </span>
-              <span>
-                Incluída no total demonstrativo
+              <span className="text-[#f4e9d9]">
+                0.005 ETH
               </span>
             </div>
 
