@@ -21,6 +21,7 @@ export default function Checkout() {
   const [profileName, setProfileName] = useState("");
   const [secondaryWallet, setSecondaryWallet] = useState("");
   const [ensName, setEnsName] = useState("");
+  const [ensExtension, setEnsExtension] = useState(".eth");
   const [username, setUsername] = useState("");
   const [network, setNetwork] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
