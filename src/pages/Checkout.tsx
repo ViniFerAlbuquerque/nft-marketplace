@@ -107,7 +107,6 @@ export default function Checkout() {
             Voltar ao marketplace
           </Link>
         </div>
-        <Footer />
       </main>
     );
   }
@@ -291,10 +290,13 @@ export default function Checkout() {
                 />
               </div>
 
+
+              {/* NOME ENS */}
               <div>
                 <label htmlFor="ensName" className={labelClass}>
                   Nome ENS*
                 </label>
+
                 <div className="flex gap-2">
                   <input
                     id="ensName"
@@ -302,11 +304,21 @@ export default function Checkout() {
                     onChange={(event) => setEnsName(event.target.value)}
                     placeholder="Seu nome ENS"
                     required
-                    className={inputClass}
+                    className={`${inputClass} min-w-0 flex-1`}
                   />
-                  <span className="flex h-10 shrink-0 items-center border border-[#493022] bg-[#21150f] px-3 text-[11px] text-[#d9904b]">
-                    .eth
-                  </span>
+
+                  <select
+                    aria-label="Extensão do nome"
+                    value={ensExtension}
+                    onChange={(event) =>
+                      setEnsExtension(event.target.value)
+                    }
+                    className="h-10 w-[90px] shrink-0 rounded-sm border border-[#493022] bg-[#21150f] px-2 text-[11px] text-[#d9904b] outline-none focus:border-[#d9904b]"
+                  >
+                    <option value=".eth">.eth</option>
+                    <option value=".poly">.poly</option>
+                    <option value=".sola">.sola</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -316,7 +328,9 @@ export default function Checkout() {
               <input
                 type="checkbox"
                 checked={useAnotherWallet}
-                onChange={(event) => setUseAnotherWallet(event.target.checked)}
+                onChange={(event) =>
+                  setUseAnotherWallet(event.target.checked)
+                }
                 className="accent-[#d9904b]"
               />
               Usar outra carteira?
@@ -327,6 +341,7 @@ export default function Checkout() {
               <label htmlFor="notes" className={labelClass}>
                 Observação do colecionador (opcional)
               </label>
+
               <textarea
                 id="notes"
                 value={notes}
@@ -337,6 +352,7 @@ export default function Checkout() {
               />
             </div>
           </section>
+
 
 
           {/* SEUS NFTS E PAGAMENTO */}
@@ -432,7 +448,10 @@ export default function Checkout() {
                     type="radio"
                     name="wallet"
                     checked={wallet === option.id}
-                    onChange={() => setWallet(option.id)}
+                    onChange={() => {
+                      setWallet(option.id);
+                      setWalletType(option.id);
+                    }}
                     className="accent-[#d9904b]"
                   />
                   <Wallet size={15} className="text-[#d9904b]" />
@@ -465,7 +484,9 @@ export default function Checkout() {
         </form>
       </div>
 
+      {/* RODAPÉ DO KURIO */}
       <Footer />
+
     </main>
   );
 }
